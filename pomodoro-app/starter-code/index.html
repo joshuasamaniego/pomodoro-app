@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/starter-code/css/styles.css">
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/pomodoroFaviconFinal.png">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@300;400;700&family=Roboto+Slab:wght@300;400;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"> 
+  
+  <title>Pomodoro App</title>
+</head>
+<body id="body">
+  <div id="wrapper">
+    <h2 id="title" class="center">pomodoro</h2>
+    <!-- Nav Bar -->
+    <nav class="center">
+      <ul>
+        <li id="pomodoro" class="pointer active">pomodoro</li>
+        <li id="shortBreak" class="pointer">short break</li>
+        <li id="longBreak" class="pointer">long break</li>
+      </ul>
+      <div id="bgIndicator"></div>
+    </nav>
+    <!-- Timer -->
+    <section id="timer" class="center">
+      <div id="outerCircle">
+        <div id="innerCircle">
+          <svg id="ring">
+            <circle cx="50%" cy="50%" r="163"></circle>
+            <text x="50%" y="50%" id="clock" dominant-baseline="middle" text-anchor="middle">25:00</text>
+            <text x="50%" y="75%" id="startStop" onclick="handleClick(this.innerHTML)" dominant-baseline="middle" text-anchor="middle">start</text>
+          </svg>
+        </div>
+      </div>
+    </section>
+    <!-- Settings Icon-->
+    <section id="settings" class="center">
+      <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" id ="settingsIcon"><path fill="#D7E0FF" d="M26.965 17.682l-2.927-2.317c.055-.448.097-.903.097-1.365 0-.462-.042-.917-.097-1.365l2.934-2.317a.702.702 0 00.167-.896l-2.775-4.851a.683.683 0 00-.847-.301l-3.454 1.407a10.506 10.506 0 00-2.345-1.379l-.52-3.71A.716.716 0 0016.503 0h-5.55a.703.703 0 00-.687.588l-.52 3.71c-.847.357-1.63.819-2.345 1.379L3.947 4.27a.691.691 0 00-.847.301L.325 9.422a.705.705 0 00.167.896l2.927 2.317c-.055.448-.097.903-.097 1.365 0 .462.042.917.097 1.365L.492 17.682a.702.702 0 00-.167.896L3.1 23.429a.683.683 0 00.847.301L7.4 22.323a10.506 10.506 0 002.345 1.379l.52 3.71c.056.329.34.588.687.588h5.55a.703.703 0 00.687-.588l.52-3.71c.847-.357 1.631-.819 2.346-1.379l3.454 1.407c.313.119.673 0 .847-.301l2.775-4.851a.705.705 0 00-.167-.896zM13.73 18.9c-2.685 0-4.857-2.191-4.857-4.9 0-2.709 2.172-4.9 4.857-4.9 2.684 0 4.856 2.191 4.856 4.9 0 2.71-2.172 4.9-4.856 4.9z" opacity=".5"/></svg>
+      <!-- Settings Modal -->
+      <div id="modalContainer">
+        <div id="modal">
+          <div id="modalTop">
+            <h2 id="modalHeader">Settings</h2>
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" id="close"><path fill="#1E213F" fill-rule="evenodd" d="M11.95.636l1.414 1.414L8.414 7l4.95 4.95-1.414 1.414L7 8.414l-4.95 4.95L.636 11.95 5.586 7 .636 2.05 2.05.636 7 5.586l4.95-4.95z" opacity=".5"/></svg>
+          </div>
+          <div id="separator"></div>
+          <div id="modalBottom">
+            <h4>Time (Minutes)</h4>
+            <div id="timeColumnsContainer">
+              <!-- Timer Columns -->
+              <div class="timeColumns">
+                <!-- Regular Pomodoro Timer Column -->
+                <p>pomodoro</p>
+                <div class="minutesArea">
+                  <p id="pomodoroMins">25</p>
+                  <div class="arrowContainer">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="7" class="up" id="pomodoroUp"><path id="pomodoroUp" fill="none" stroke="#1E213F" stroke-opacity=".25" stroke-width="2" d="M1 6l6-4 6 4"/></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="7" class="down" id="pomodoroDown"><path id="pomodoroDown" fill="none" stroke="#1E213F" stroke-opacity=".25" stroke-width="2" d="M1 1l6 4 6-4"/></svg>
+                  </div>
+                </div>
+              </div>
+              <div class="timeColumns">
+                <!--Short Break Timer Column -->
+                <p>short break</p>
+                <div class="minutesArea">
+                  <p id="shortBreakMins">5</p>
+                  <div class="arrowContainer">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="7" class="up" id="shortBreakUp"><path id="shortBreakUp" fill="none" stroke="#1E213F" stroke-opacity=".25" stroke-width="2" d="M1 6l6-4 6 4"/></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="7" class="down" id="shortBreakDown"><path id="shortBreakDown" fill="none" stroke="#1E213F" stroke-opacity=".25" stroke-width="2" d="M1 1l6 4 6-4"/></svg>
+                  </div>
+                </div>
+              </div>
+              <div class="timeColumns">
+                <!--Long Break Timer Column -->
+                <p>long break</p>
+                <div class="minutesArea">
+                  <p id="longBreakMins">15</p>
+                  <div class="arrowContainer">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="7" class="up" id="longBreakUp"><path id="longBreakUp" fill="none" stroke="#1E213F" stroke-opacity=".25" stroke-width="2" d="M1 6l6-4 6 4"/></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="7" class="down" id="longBreakDown"><path id="longBreakDown" fill="none" stroke="#1E213F" stroke-opacity=".25" stroke-width="2" d="M1 1l6 4 6-4"/></svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Font Button Section -->
+            <div class="modalBottomSeparator"></div>
+            <div class="customizations">
+              <h4>Font</h4>
+              <div class="circlesContainer">
+                <div id="kumbh" class="fontCircles fontActive"><span id="kumbhSans" class="circleText">Aa</span></div>
+                <div id="roboto" class="fontCircles"><span id="robotoSlab" class="circleText">Aa</span></div>
+                <div id="space" class="fontCircles"><span id="spaceMono" class="circleText">Aa</span></div>
+              </div>
+            </div>
+            <!-- Color Button Section -->
+            <div class="modalBottomSeparator"></div>
+            <div class="customizations">
+              <h4>Color</h4>
+              <div class="circlesContainer">
+                <div id="orange" class="colorCircles"><img src="./assets/Checkmark-blue.png" alt="checkmark" class="checkmark checkActive"></div>
+                <div id="green" class="colorCircles"><img src="./assets/Checkmark-blue.png" alt="checkmark" class="checkmark"></div>
+                <div id="purple" class="colorCircles"><img src="./assets/Checkmark-blue.png" alt="checkmark" class="checkmark"></div>
+              </div>
+            </div>
+          </div>
+          <!-- Apply Changes/Modal Button -->
+          <button id="modalButton">Apply</button>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!-- Scripts -->
+  <script src="js/modal.js"></script>
+  <script src="js/index.js"></script>
+</body>
+</html>
